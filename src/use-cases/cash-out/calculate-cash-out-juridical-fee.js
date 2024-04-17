@@ -1,9 +1,12 @@
 import { ZERO_FEE } from '../../constants/constants.js';
+import pkg from 'lodash/fp.js';
+
+const { isEmpty } = pkg;
 
 export default class CalculateCashOutJuridicalFee {
   constructor({
-    transaction,
-    rule,
+    transaction= {},
+    rule = {},
   }) {
     this.rule = rule;
     this.transaction = transaction;
@@ -11,7 +14,7 @@ export default class CalculateCashOutJuridicalFee {
   }
 
   calculateFee() {
-    if (!this.transaction || !this.transaction.operation || !this.rule || !this.rule.min) {
+    if (isEmpty(this.transaction) || isEmpty(this.rule)) {
       return ZERO_FEE;
     }
     const { percents: feePercent } = this.rule;
@@ -21,7 +24,7 @@ export default class CalculateCashOutJuridicalFee {
     const minFee = this.rule.min.amount;
 
     if (roundedFee < minFee) {
-      return minFee.toFixed(2);
+      return minFee;
     }
 
     return roundedFee;
@@ -29,13 +32,8 @@ export default class CalculateCashOutJuridicalFee {
 
   computeRoundedFee({ amount, feePercent }) {
     const amountInCents = amount * 100;
-    const feeInCents = (amountInCents * feePercent) / 100;
-    this.fee = feeInCents / 100;
+    const roundedFeeInCent = Math.ceil((amountInCents * feePercent) / 100);
 
-    return this.roundFeeToTwo();
-  }
-
-  roundFeeToTwo() {
-    return (Math.ceil(this.fee * 100) / 100).toFixed(2);
+    return roundedFeeInCent / 100;
   }
 }

@@ -1,11 +1,14 @@
 import pkg from 'lodash/fp.js';
 import { CASH_OUT, NATURAL_USER, ZERO_FEE } from '../../constants/constants.js';
 
+const { isEmpty } = pkg;
+const { isEqual } = pkg;
+
 export default class CalculateCashOutNaturalFee {
   constructor({
-    operations,
-    transaction,
-    rule,
+    operations = [],
+    transaction = {},
+    rule = {},
   }) {
     this.operations = [...operations];
     this.rule = rule;
@@ -14,7 +17,7 @@ export default class CalculateCashOutNaturalFee {
   }
 
   calculateFee() {
-    if (!this.transaction || !this.transaction.operation || !this.rule) {
+    if (isEmpty(this.transaction) || isEmpty(this.rule) || isEmpty(this.operations)) {
       return ZERO_FEE;
     }
     const { percents: feePercent } = this.rule;
@@ -29,7 +32,7 @@ export default class CalculateCashOutNaturalFee {
       });
     }
 
-    return ZERO_FEE.toFixed(2);
+    return ZERO_FEE;
   }
 
   getWeekAmount(transaction) {
@@ -40,7 +43,6 @@ export default class CalculateCashOutNaturalFee {
 
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekEnd.getDate() + 6);
-
     const weekOperations = this.operations.filter((operation) => {
       const operationDate = new Date(operation.date);
 
@@ -64,8 +66,6 @@ export default class CalculateCashOutNaturalFee {
   }
 
   getNextOperation(operation) {
-    const { isEqual } = pkg;
-
     return this.operations.forEach((op, index) => {
       if (!op.process) {
         if (isEqual(op, operation)) {
@@ -79,13 +79,8 @@ export default class CalculateCashOutNaturalFee {
 
   computeRoundedFee({ amount, feePercent }) {
     const amountInCents = amount * 100;
-    const feeInCents = (amountInCents * feePercent) / 100;
-    this.fee = feeInCents / 100;
+    const roundedFeeInCent = Math.ceil((amountInCents * feePercent) / 100);
 
-    return this.roundFeeToTwo();
-  }
-
-  roundFeeToTwo() {
-    return (Math.ceil(this.fee * 100) / 100).toFixed(2);
+    return roundedFeeInCent / 100;
   }
 }

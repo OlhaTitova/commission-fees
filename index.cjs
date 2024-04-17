@@ -1,6 +1,6 @@
-const cashInJson = require('./json/cash-in.json');
-const cashOutJuridicalJson = require('./json/cash-out-juridical.json');
-const cashOutNaturalJson = require('./json/cash-out-natural.json');
+const cashInConfig = require('./json/cash-in.json');
+const cashOutJuridicalConfig = require('./json/cash-out-juridical.json');
+const cashOutNaturalConfig = require('./json/cash-out-natural.json');
 const fs = require('fs');
 
 const processData = (inputData) => {
@@ -8,11 +8,11 @@ const processData = (inputData) => {
 
   return import('./src/use-cases/calculate-fees.js')
     .then(({CalculateFees}) => new CalculateFees({
-      cashInJson,
-      cashOutJuridicalJson,
-      cashOutNaturalJson,
+      cashInConfig,
+      cashOutJuridicalConfig,
+      cashOutNaturalConfig,
       operations
-    }).getFee())
+    }).getFees().forEach(fee => console.log(fee.toFixed(2))))
     .catch(err => console.error('Error in get commission fees', err)
     )
 };
