@@ -1,26 +1,12 @@
 For running the code, you need write the following command in the terminal:
 ```node index.cjs ./json/input.json```
 
-## Requirements
-there are no strict deadlines, but lets keep in touch - if you have any problems or have no free time available for the task, just contact us;
-task must be made in JavaScript(ES5, ES6 or ES-next) using node.js. If you're not comfortable with node.js, please use whatever you like;
-third party libraries, dependencies, tools, frameworks etc. can be used if seems necessary;
-your system must be maintainable:
-clear dependencies between separate parts of your code;
-system must be both testable and tested (unit tests are required);
-code understandable, readable, have a clear flow;
-your system must be extensible:
-adding new functionality or changing existing one should not require rewriting the system itself or it's core parts;
-code must be Airbnb style guide compatible;
-minimal documentation should be provided:
-how system should be ran (what command to run);
-how to initiate system's tests (what command to run);
-short description of functionality in more difficult places could be provided in the code itself;
-do not use Paysera name in titles, descriptions or the code itself. This helps others to find the libraries that are really related to our services and/or are developed and maintained by our team.
+For running the tests, you need write the following command in the terminal:
+```npm test```
 
 ## Task
 * Situation
-Paysera users can go to a branch to cash in and/or cash out from Paysera account. There are also commission fees for both cash in and cash out. Only supported currency is EUR.
+Users can go to a branch to cash in and/or cash out from account. There are also commission fees for both cash in and cash out. Only supported currency is EUR.
 
 * Commission Fees
 * For Cash In
@@ -99,13 +85,3 @@ Result - calculated commission fees for each operation. In each line only final 
 ## Evaluation Criteria
 all requirements must be met;
 code quality - it's maintainability, extensibility, testability; speed of the system can also be considered, but is not as important as other criteria.
-
-## Task Submission
-Before submitting your task, please review the requirements once again – all of them must be accomplished.
-
-You can upload the source (i.e. to GitHub) publicly, but please refrain from using Paysera name in title, description or source code.
-
-Submit the task in your chosen format (link to versioned code in GitHub/Google Drive or code in zip file, etc.) by sending it to the email provided by Paysera HR Coordinator or your Agency. Please also include approx. how much time was spent to complete the task.
-
-
-
