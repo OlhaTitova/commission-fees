@@ -1,4 +1,8 @@
-import { CASH_IN, JURIDICAL_USER, NATURAL_USER } from '../constants/constants.js';
+import {
+  CASH_IN,
+  JURIDICAL_USER,
+  NATURAL_USER
+} from '../constants/constants.js';
 import pkg from 'lodash/fp.js';
 
 const { isEmpty } = pkg;

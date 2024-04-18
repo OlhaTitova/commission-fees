@@ -1,5 +1,5 @@
 import {CalculateFees} from "./calculate-fees.js";
-import {DEFAULT_OPERATIONS} from "../constants/constants.js";
+import {DEFAULT_OPERATIONS} from "../../constants/constants.js";
 
 describe("CalculateFees", () => {
   it("should return zero fee if there is no operations", () => {

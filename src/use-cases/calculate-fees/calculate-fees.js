@@ -1,23 +1,36 @@
-import OperationsTransformer from '../transformers/operation-transformer.js';
-import Rules from './rules.js';
+import OperationsTransformer from '../../transformers/operation-transformer.js';
+import Rules from '../rules/rules.js';
 import {
-  CASH_IN, CASH_OUT, JURIDICAL_USER, NATURAL_USER, ZERO_FEE,
-} from '../constants/constants.js';
-import CalculateCashInFee from './cash-in/calculate-cash-in-fee.js';
-import CalculateCashOutJuridicalFee from './cash-out/calculate-cash-out-juridical-fee.js';
-import CalculateCashOutNaturalFee from './cash-out/calculate-cash-out-natural-fee.js';
+  CASH_IN,
+  CASH_OUT,
+  JURIDICAL_USER,
+  NATURAL_USER,
+  ZERO_FEE,
+} from '../../constants/constants.js';
+import CalculateCashInFee from '../cash-in/calculate-cash-in-fee.js';
+import CalculateCashOutJuridicalFee from '../cash-out/calculate-cash-out-juridical-fee.js';
+import CalculateCashOutNaturalFee from '../cash-out/calculate-cash-out-natural-fee.js';
 import pkg from 'lodash/fp.js';
 
 const { isEmpty } = pkg;
 
 export class CalculateFees {
+  static transformOperations(operations) {
+    operations.forEach((operation, index) => {
+      operations[index] = new OperationsTransformer(operation).transform();
+    });
+    return operations;
+  }
+
   constructor({
     cashInConfig = {},
     cashOutJuridicalConfig = {},
     cashOutNaturalConfig = {},
     operations = [],
   }) {
-    this.operations = [...operations];
+    const transformedOperations = CalculateFees.transformOperations(operations);
+
+    this.operations = [...transformedOperations];
     this.cashInConfig = cashInConfig;
     this.cashOutJuridicalConfig = cashOutJuridicalConfig;
     this.cashOutNaturalConfig = cashOutNaturalConfig;
@@ -28,8 +41,6 @@ export class CalculateFees {
       return ZERO_FEE;
     }
 
-    this.transformOperations();
-
     const fees = [];
 
     this.operations.forEach((operation) => {
@@ -38,13 +49,6 @@ export class CalculateFees {
     });
 
     return fees;
-  }
-
-  transformOperations() {
-    this.operations.forEach((operation, index) => {
-      this.operations[index] = new OperationsTransformer(operation).transform();
-    });
-    return this.operations;
   }
 
   getFeeForTransaction(transaction) {

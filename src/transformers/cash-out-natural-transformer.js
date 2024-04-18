@@ -4,11 +4,13 @@ import pkg from 'lodash/fp.js';
 const { isEmpty } = pkg;
 
 export default class CashOutNaturalConfigTransformer {
-  constructor(config = {}) {
+  constructor(config = {})
+  {
     this.config = config;
   }
-  transform() {
-    if(isEmpty(this.config)){
+  transform()
+  {
+    if (isEmpty(this.config)) {
       return {};
     }
 

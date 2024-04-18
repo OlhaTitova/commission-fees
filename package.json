@@ -5,7 +5,7 @@
   "main": "src/index.cjs",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "author": "Olha Titova",
   "license": "ISC",
@@ -19,20 +19,17 @@
   "eslintConfig": {
     "extends": "airbnb"
   },
-    "jest": {
-      "testEnvironment": "node",
-      "testMatch": ["**/*.test.js"],
-      "moduleFileExtensions": ["js"],
-      "moduleNameMapper": {
-        "^src/(.*)$": "<rootDir>/src/$1"
-      },
-      "collectCoverage": true,
-      "collectCoverageFrom": [
-        "src/**/*.js"
-      ],
-      "coveragePathIgnorePatterns": [
-        "/node_modules/",
-        "/__tests__/"
-      ]
-    }
+  "jest": {
+    "transform": {},
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/src/$1"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
 }

@@ -1,6 +1,6 @@
-import CashInConfigTransformer from '../transformers/cash-in-transformer.js';
-import CashOutJuridicalConfigTransformer from '../transformers/cash-out-juridical-transformer.js';
-import CashOutNaturalConfigTransformer from '../transformers/cash-out-natural-transformer.js';
+import CashInConfigTransformer from '../../transformers/cash-in-transformer.js';
+import CashOutJuridicalConfigTransformer from '../../transformers/cash-out-juridical-transformer.js';
+import CashOutNaturalConfigTransformer from '../../transformers/cash-out-natural-transformer.js';
 import pkg from 'lodash/fp.js';
 
 const { isEmpty } = pkg;

@@ -1,5 +1,10 @@
 import Rules from "./rules.js";
-import {CASH_IN, CASH_OUT, JURIDICAL_USER, NATURAL_USER} from "../constants/constants.js";
+import {
+  CASH_IN,
+  CASH_OUT,
+  JURIDICAL_USER,
+  NATURAL_USER
+} from "../../constants/constants.js";
 
 describe("Rules", () => {
   it("should return an empty array if there are no conditions", () => {
