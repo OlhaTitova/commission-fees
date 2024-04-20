@@ -28,7 +28,7 @@ class CalculateFees {
       cashInConditions: cashInConfig,
       cashOutJuridicalConditions: cashOutJuridicalConfig,
       cashOutNaturalConditions: cashOutNaturalConfig,
-    }).getTransformedRules();
+    }).rules;
   }
 
   getFees() {
