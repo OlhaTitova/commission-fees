@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const DEFAULT_OPERATIONS = [
   {
     date: '2016-01-05',

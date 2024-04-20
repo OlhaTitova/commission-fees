@@ -1,4 +1,4 @@
-import { CalculateFees } from './calculate-fees.js';
+import CalculateFees from './calculate-fees.js';
 import { DEFAULT_OPERATIONS } from '../../transformers/mock.js';
 
 describe('CalculateFees', () => {

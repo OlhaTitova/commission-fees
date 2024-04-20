@@ -4,7 +4,7 @@ import {
   JURIDICAL_USER,
 } from '../constants/constants.js';
 
-export default class CashOutJuridicalConfigTransformer {
+class CashOutJuridicalConfigTransformer {
   constructor(config = {}) {
     this.config = config;
   }
@@ -26,3 +26,5 @@ export default class CashOutJuridicalConfigTransformer {
     return transformedObject;
   }
 }
+
+export default CashOutJuridicalConfigTransformer;

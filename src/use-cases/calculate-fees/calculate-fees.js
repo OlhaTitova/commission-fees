@@ -12,7 +12,7 @@ import CalculateCashInFee from '../cash-in/calculate-cash-in-fee.js';
 import CalculateCashOutJuridicalFee from '../cash-out/calculate-cash-out-juridical-fee.js';
 import CalculateCashOutNaturalFee from '../cash-out/calculate-cash-out-natural-fee.js';
 
-export class CalculateFees {
+class CalculateFees {
   static transformOperations(operations) {
     return operations.map((operation) => new OperationsTransformer(operation).transform());
   }
@@ -77,3 +77,5 @@ export class CalculateFees {
     return fee;
   }
 }
+
+export default CalculateFees;

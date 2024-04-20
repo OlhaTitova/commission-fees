@@ -1,7 +1,14 @@
 import { isEmpty, isEqual } from 'lodash-es';
 import { CASH_OUT, NATURAL_USER, ZERO_FEE } from '../../constants/constants.js';
 
-export default class CalculateCashOutNaturalFee {
+class CalculateCashOutNaturalFee {
+  static computeRoundedFee({ amount, feePercent }) {
+    const amountInCents = amount * 100;
+    const roundedFeeInCent = Math.ceil((amountInCents * feePercent) / 100);
+
+    return roundedFeeInCent / 100;
+  }
+
   constructor({
     operations = [],
     transaction = {},
@@ -23,7 +30,7 @@ export default class CalculateCashOutNaturalFee {
 
     if (weekAmount > weekLimitAmount) {
       const amountExceeded = weekAmount - weekLimitAmount;
-      return this.computeRoundedFee({
+      return CalculateCashOutNaturalFee.computeRoundedFee({
         amount: amountExceeded,
         feePercent,
       });
@@ -73,12 +80,6 @@ export default class CalculateCashOutNaturalFee {
       return this.operations[index + 1];
     });
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  computeRoundedFee({ amount, feePercent }) {
-    const amountInCents = amount * 100;
-    const roundedFeeInCent = Math.ceil((amountInCents * feePercent) / 100);
-
-    return roundedFeeInCent / 100;
-  }
 }
+
+export default CalculateCashOutNaturalFee;

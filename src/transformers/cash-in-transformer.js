@@ -5,7 +5,7 @@ import {
   NATURAL_USER,
 } from '../constants/constants.js';
 
-export default class CashInConfigTransformer {
+class CashInConfigTransformer {
   constructor(config = {}) {
     this.config = config;
   }
@@ -27,3 +27,5 @@ export default class CashInConfigTransformer {
     return transformedObject;
   }
 }
+
+export default CashInConfigTransformer;

@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash-es';
 import { CASH_OUT, NATURAL_USER } from '../constants/constants.js';
 
-export default class CashOutNaturalConfigTransformer {
+class CashOutNaturalConfigTransformer {
   constructor(config = {}) {
     this.config = config;
   }
@@ -23,3 +23,5 @@ export default class CashOutNaturalConfigTransformer {
     return transformedObject;
   }
 }
+
+export default CashOutNaturalConfigTransformer;

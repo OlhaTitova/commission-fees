@@ -1,7 +1,14 @@
 import { isEmpty } from 'lodash-es';
 import { ZERO_FEE } from '../../constants/constants.js';
 
-export default class CalculateCashInFee {
+class CalculateCashInFee {
+  static computeRoundedFee({ amount, feePercent }) {
+    const amountInCents = amount * 100;
+    const roundedFeeInCent = Math.ceil((amountInCents * feePercent) / 100);
+
+    return roundedFeeInCent / 100;
+  }
+
   constructor({ transaction = {}, rule = {} }) {
     this.rule = rule;
     this.transaction = transaction;
@@ -15,7 +22,7 @@ export default class CalculateCashInFee {
 
     const { percents: feePercent } = this.rule;
     const { amount } = this.transaction.operation;
-    const roundedFee = this.computeRoundedFee({ amount, feePercent });
+    const roundedFee = CalculateCashInFee.computeRoundedFee({ amount, feePercent });
     const maxFee = this.rule.max.amount;
 
     if (roundedFee > maxFee) {
@@ -24,12 +31,6 @@ export default class CalculateCashInFee {
 
     return roundedFee;
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  computeRoundedFee({ amount, feePercent }) {
-    const amountInCents = amount * 100;
-    const roundedFeeInCent = Math.ceil((amountInCents * feePercent) / 100);
-
-    return roundedFeeInCent / 100;
-  }
 }
+
+export default CalculateCashInFee;

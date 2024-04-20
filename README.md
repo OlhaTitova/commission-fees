@@ -1,5 +1,5 @@
 For running the code, you need write the following command in the terminal:
-```node index.cjs ./json/input.json```
+```node index.js ./json/input.json```
 
 For running the tests, you need write the following command in the terminal:
 ```npm test```
@@ -80,7 +80,7 @@ Result - calculated commission fees for each operation. In each line only final 
 ]
 ```
 
-➜   node index.cjs ./json/input.json
+➜   node index.js ./json/input.json
 ```
 0.06
 0.90

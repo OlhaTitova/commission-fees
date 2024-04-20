@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash-es';
 
-export default class OperationsTransformer {
+class OperationsTransformer {
   constructor(operation = {}) {
     this.operation = operation;
   }
@@ -23,3 +23,5 @@ export default class OperationsTransformer {
     return transformedObject;
   }
 }
+
+export default OperationsTransformer;

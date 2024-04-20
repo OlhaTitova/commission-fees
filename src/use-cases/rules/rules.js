@@ -3,7 +3,7 @@ import CashInConfigTransformer from '../../transformers/cash-in-transformer.js';
 import CashOutJuridicalConfigTransformer from '../../transformers/cash-out-juridical-transformer.js';
 import CashOutNaturalConfigTransformer from '../../transformers/cash-out-natural-transformer.js';
 
-export default class Rules {
+class Rules {
   constructor({
     cashInConditions = {},
     cashOutJuridicalConditions = {},
@@ -42,3 +42,5 @@ export default class Rules {
     return this.rules;
   }
 }
+
+export default Rules;
