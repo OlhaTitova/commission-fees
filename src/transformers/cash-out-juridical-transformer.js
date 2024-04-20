@@ -1,17 +1,16 @@
+import { isEmpty } from 'lodash-es';
 import {
   CASH_OUT,
-  JURIDICAL_USER
+  JURIDICAL_USER,
 } from '../constants/constants.js';
-import pkg from 'lodash/fp.js';
-
-const { isEmpty } = pkg;
 
 export default class CashOutJuridicalConfigTransformer {
   constructor(config = {}) {
     this.config = config;
   }
+
   transform() {
-    if(isEmpty(this.config)){
+    if (isEmpty(this.config)) {
       return {};
     }
 

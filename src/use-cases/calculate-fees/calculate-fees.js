@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash-es';
 import OperationsTransformer from '../../transformers/operation-transformer.js';
 import Rules from '../rules/rules.js';
 import {
@@ -10,16 +11,10 @@ import {
 import CalculateCashInFee from '../cash-in/calculate-cash-in-fee.js';
 import CalculateCashOutJuridicalFee from '../cash-out/calculate-cash-out-juridical-fee.js';
 import CalculateCashOutNaturalFee from '../cash-out/calculate-cash-out-natural-fee.js';
-import pkg from 'lodash/fp.js';
-
-const { isEmpty } = pkg;
 
 export class CalculateFees {
   static transformOperations(operations) {
-    operations.forEach((operation, index) => {
-      operations[index] = new OperationsTransformer(operation).transform();
-    });
-    return operations;
+    return operations.map((operation) => new OperationsTransformer(operation).transform());
   }
 
   constructor({
@@ -28,12 +23,12 @@ export class CalculateFees {
     cashOutNaturalConfig = {},
     operations = [],
   }) {
-    const transformedOperations = CalculateFees.transformOperations(operations);
-
-    this.operations = [...transformedOperations];
-    this.cashInConfig = cashInConfig;
-    this.cashOutJuridicalConfig = cashOutJuridicalConfig;
-    this.cashOutNaturalConfig = cashOutNaturalConfig;
+    this.operations = CalculateFees.transformOperations(operations);
+    this.rules = new Rules({
+      cashInConditions: cashInConfig,
+      cashOutJuridicalConditions: cashOutJuridicalConfig,
+      cashOutNaturalConditions: cashOutNaturalConfig,
+    }).getTransformedRules();
   }
 
   getFees() {
@@ -41,26 +36,13 @@ export class CalculateFees {
       return ZERO_FEE;
     }
 
-    const fees = [];
-
-    this.operations.forEach((operation) => {
-      const fee = this.getFeeForTransaction(operation);
-      fees.push(fee);
-    });
-
-    return fees;
+    return this.operations.map((operation) => this.getFeeForTransaction(operation));
   }
 
   getFeeForTransaction(transaction) {
-    const rules = new Rules({
-      cashInConditions: this.cashInConfig,
-      cashOutJuridicalConditions: this.cashOutJuridicalConfig,
-      cashOutNaturalConditions: this.cashOutNaturalConfig
-    }).getTransformedRules();
-
     let fee = ZERO_FEE;
 
-    rules.forEach((rule) => {
+    this.rules.forEach((rule) => {
       const isCashInOperation = transaction.type === CASH_IN && rule.transactionType === CASH_IN;
       const isCashOutOperation = transaction.type === CASH_OUT && rule.transactionType === CASH_OUT;
       const isJuridicalUser = (transaction.userType === JURIDICAL_USER)

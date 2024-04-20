@@ -1,8 +1,5 @@
-import pkg from 'lodash/fp.js';
+import { isEmpty, isEqual } from 'lodash-es';
 import { CASH_OUT, NATURAL_USER, ZERO_FEE } from '../../constants/constants.js';
-
-const { isEmpty } = pkg;
-const { isEqual } = pkg;
 
 export default class CalculateCashOutNaturalFee {
   constructor({
@@ -77,6 +74,7 @@ export default class CalculateCashOutNaturalFee {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   computeRoundedFee({ amount, feePercent }) {
     const amountInCents = amount * 100;
     const roundedFeeInCent = Math.ceil((amountInCents * feePercent) / 100);

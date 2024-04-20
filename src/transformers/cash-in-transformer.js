@@ -1,18 +1,17 @@
+import { isEmpty } from 'lodash-es';
 import {
   CASH_IN,
   JURIDICAL_USER,
-  NATURAL_USER
+  NATURAL_USER,
 } from '../constants/constants.js';
-import pkg from 'lodash/fp.js';
-
-const { isEmpty } = pkg;
 
 export default class CashInConfigTransformer {
   constructor(config = {}) {
     this.config = config;
   }
+
   transform() {
-    if(isEmpty(this.config)){
+    if (isEmpty(this.config)) {
       return {};
     }
 

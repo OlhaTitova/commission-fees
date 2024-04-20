@@ -1,11 +1,10 @@
-import pkg from 'lodash/fp.js';
-
-const { isEmpty } = pkg;
+import { isEmpty } from 'lodash-es';
 
 export default class OperationsTransformer {
   constructor(operation = {}) {
     this.operation = operation;
   }
+
   transform() {
     if (isEmpty(this.operation)) {
       return {};

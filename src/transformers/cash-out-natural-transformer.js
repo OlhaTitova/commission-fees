@@ -1,15 +1,12 @@
+import { isEmpty } from 'lodash-es';
 import { CASH_OUT, NATURAL_USER } from '../constants/constants.js';
-import pkg from 'lodash/fp.js';
-
-const { isEmpty } = pkg;
 
 export default class CashOutNaturalConfigTransformer {
-  constructor(config = {})
-  {
+  constructor(config = {}) {
     this.config = config;
   }
-  transform()
-  {
+
+  transform() {
     if (isEmpty(this.config)) {
       return {};
     }

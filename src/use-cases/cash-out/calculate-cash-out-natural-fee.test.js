@@ -1,69 +1,69 @@
-import CalculateCashOutNaturalFee from "./calculate-cash-out-natural-fee.js";
-import {DEFAULT_OPERATIONS} from "../../constants/constants.js";
+import CalculateCashOutNaturalFee from './calculate-cash-out-natural-fee.js';
+import { DEFAULT_OPERATIONS } from '../../transformers/mock.js';
 
 const DEFAULT_RULE = {
   percents: 0.3,
   weekLimit: {
     amount: 1000,
-    currency: "EUR"
-  }
-}
+    currency: 'EUR',
+  },
+};
 
-describe("CalculateCashOutNaturalFee", () => {
-  it("should return zero fee if there is no operations, no transaction and no rules", () => {
+describe('CalculateCashOutNaturalFee', () => {
+  it('should return zero fee if there is no operations, no transaction and no rules', () => {
     const fee = new CalculateCashOutNaturalFee({
       operations: [],
       transaction: {},
-      rule: {}
+      rule: {},
     }).calculateFee();
 
     expect(fee).toBe(0.00);
   });
 
-  it("should return zero fee if there is no operations", () => {
+  it('should return zero fee if there is no operations', () => {
     const transaction = {
       date: '2016-01-05',
       user_id: 1,
-      user_type: "natural",
-      type: "cash_out",
+      user_type: 'natural',
+      type: 'cash_out',
       operation: {
         amount: 100,
-        currency: "EUR"
-      }
-    }
+        currency: 'EUR',
+      },
+    };
     const fee = new CalculateCashOutNaturalFee({
       operations: [],
       transaction,
-      rule: {}
+      rule: {},
     }).calculateFee();
     expect(fee).toBe(0.00);
   });
 
-  it("should return zero fee if there is no transaction", () => {
+  it('should return zero fee if there is no transaction', () => {
     const fee = new CalculateCashOutNaturalFee({
       operations: DEFAULT_OPERATIONS,
       transaction: {},
-      rule: DEFAULT_RULE
+      rule: DEFAULT_RULE,
     }).calculateFee();
 
     expect(fee).toBe(0.00);
   });
 
-  it("should return zero fee if there is no rules", () => {
+  it('should return zero fee if there is no rules', () => {
     const transaction = {
       date: '2016-01-05',
       user_id: 1,
-      user_type: "natural",
-      type: "cash_out",
+      user_type: 'natural',
+      type: 'cash_out',
       operation: {
         amount: 100,
-        currency: "EUR"
-      }
-    }
+        currency: 'EUR',
+      },
+    };
     const fee = new CalculateCashOutNaturalFee({
       operations: DEFAULT_OPERATIONS,
       transaction,
-      rule: {}
+      rule: {},
     }).calculateFee();
     expect(fee).toBe(0.00);
   });
@@ -77,15 +77,15 @@ describe("CalculateCashOutNaturalFee", () => {
       type: 'cash_out',
       operation: {
         amount: 100,
-        currency: 'EUR'
+        currency: 'EUR',
       },
-      process: false
-    }
+      process: false,
+    };
 
     const fee = new CalculateCashOutNaturalFee({
       operations: DEFAULT_OPERATIONS,
       transaction,
-      rule: DEFAULT_RULE
+      rule: DEFAULT_RULE,
     }).calculateFee();
 
     expect(fee).toBe(90.60);
@@ -100,18 +100,17 @@ describe("CalculateCashOutNaturalFee", () => {
       type: 'cash_out',
       operation: {
         amount: 1000,
-        currency: 'EUR'
+        currency: 'EUR',
       },
-      process: false
-    }
+      process: false,
+    };
 
     const fee = new CalculateCashOutNaturalFee({
       operations: DEFAULT_OPERATIONS,
       transaction,
-      rule: DEFAULT_RULE
+      rule: DEFAULT_RULE,
     }).calculateFee();
 
     expect(fee).toBe(0.00);
   });
-
 });
