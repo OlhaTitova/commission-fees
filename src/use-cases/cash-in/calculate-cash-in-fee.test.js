@@ -15,13 +15,14 @@ describe('CalculateCashInFee', () => {
   it('should return zero fee if there is no rules', () => {
     const transaction = {
       date: '2016-01-05',
-      user_id: 1,
-      user_type: 'natural',
+      userId: 1,
+      userType: 'natural',
       type: 'cash_in',
       operation: {
         amount: 100,
         currency: 'EUR',
       },
+      processed: false,
     };
     const fee = new CalculateCashInFee({ transaction, rule: {} }).calculateFee();
     expect(fee).toBe(0.00);
@@ -31,13 +32,14 @@ describe('CalculateCashInFee', () => {
     const cashInConfig = { percents: 0.03, max: { amount: 5, currency: 'EUR' } };
     const transaction = {
       date: '2016-01-05',
-      user_id: 1,
-      user_type: 'natural',
+      userId: 1,
+      userType: 'natural',
       type: 'cash_in',
       operation: {
         amount: 500,
         currency: 'EUR',
       },
+      processed: false,
     };
     const fee = new CalculateCashInFee({ transaction, rule: cashInConfig }).calculateFee();
     expect(fee).toBe(0.15);
@@ -47,13 +49,14 @@ describe('CalculateCashInFee', () => {
     const cashInConfig = { percents: 0.03, max: { amount: 5, currency: 'EUR' } };
     const transaction = {
       date: '2016-01-05',
-      user_id: 1,
-      user_type: 'natural',
+      userId: 1,
+      userType: 'natural',
       type: 'cash_in',
       operation: {
         amount: 100000,
         currency: 'EUR',
       },
+      processed: false,
     };
     const fee = new CalculateCashInFee({ transaction, rule: cashInConfig }).calculateFee();
     expect(fee).toBe(5.00);

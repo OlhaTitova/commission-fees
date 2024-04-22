@@ -1,27 +1,32 @@
 import CalculateFees from './calculate-fees.js';
-import { DEFAULT_OPERATIONS } from '../../transformers/mock.js';
+import {
+  CASH_IN_CONFIG,
+  CASH_OUT_JURIDICAL_CONFIG,
+  CASH_OUT_NATURAL_CONFIG,
+  DEFAULT_OPERATIONS_JSON,
+} from '../../transformers/mock.js';
 
 describe('CalculateFees', () => {
   it('should return zero fee if there is no operations', () => {
-    const fee = new CalculateFees({
+    const fees = new CalculateFees({
       operations: [],
       cashInConfig: {},
       cashOutJuridicalConfig: {},
       cashOutNaturalConfig: {},
     }).getFees();
 
-    expect(fee).toBe(0.00);
+    expect(fees).toBe(0);
   });
 
   it('should return fee for each transaction', () => {
     const operations = [
       {
-        date: '2016-01-05',
+        date: '2016-01-06',
         user_id: 1,
         user_type: 'natural',
         type: 'cash_out',
         operation: {
-          amount: 100,
+          amount: 30000,
           currency: 'EUR',
         },
       },
@@ -36,31 +41,25 @@ describe('CalculateFees', () => {
         },
       },
     ];
-    const cashInConfig = { percents: 0.03, max: { amount: 5, currency: 'EUR' } };
-    const cashOutJuridicalConfig = { percents: 0.3, min: { amount: 0.5, currency: 'EUR' } };
-    const cashOutNaturalConfig = { percents: 0.3, week_limit: { amount: 1000, currency: 'EUR' } };
-    const fee = new CalculateFees({
+
+    const fees = new CalculateFees({
       operations,
-      cashInConfig,
-      cashOutJuridicalConfig,
-      cashOutNaturalConfig,
+      cashInConfig: CASH_IN_CONFIG,
+      cashOutJuridicalConfig: CASH_OUT_JURIDICAL_CONFIG,
+      cashOutNaturalConfig: CASH_OUT_NATURAL_CONFIG,
     }).getFees();
 
-    expect(fee).toStrictEqual([0.00, 0.06]);
+    expect(fees).toStrictEqual([87, 0.06]);
   });
 
   it('should return fee for each transaction', () => {
-    const operations = DEFAULT_OPERATIONS;
-    const cashInConfig = { percents: 0.03, max: { amount: 5, currency: 'EUR' } };
-    const cashOutJuridicalConfig = { percents: 0.3, min: { amount: 0.5, currency: 'EUR' } };
-    const cashOutNaturalConfig = { percents: 0.3, week_limit: { amount: 1000, currency: 'EUR' } };
-    const fee = new CalculateFees({
-      operations,
-      cashInConfig,
-      cashOutJuridicalConfig,
-      cashOutNaturalConfig,
+    const fees = new CalculateFees({
+      operations: DEFAULT_OPERATIONS_JSON,
+      cashInConfig: CASH_IN_CONFIG,
+      cashOutJuridicalConfig: CASH_OUT_JURIDICAL_CONFIG,
+      cashOutNaturalConfig: CASH_OUT_NATURAL_CONFIG,
     }).getFees();
 
-    expect(fee).toStrictEqual([0.06, 0, 0, 0, 0, 0, 5, 0, 0]);
+    expect(fees).toStrictEqual([0.06, 0.9, 87, 90, 90.3, 90.6, 5, 0, 0]);
   });
 });

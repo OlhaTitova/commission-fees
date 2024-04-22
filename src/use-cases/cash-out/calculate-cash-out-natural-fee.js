@@ -24,6 +24,7 @@ class CalculateCashOutNaturalFee {
     if (isEmpty(this.transaction) || isEmpty(this.rule) || isEmpty(this.operations)) {
       return ZERO_FEE;
     }
+
     const { percents: feePercent } = this.rule;
     const weekAmount = this.getWeekAmount(this.transaction);
     const { amount: weekLimitAmount } = this.rule.weekLimit;
@@ -43,13 +44,15 @@ class CalculateCashOutNaturalFee {
     let weekAmount = 0;
     const weekStart = new Date(transaction.date);
     // from monday to sunday
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
+    weekStart.setDate(
+      weekStart.getDate() - weekStart.getDay() + (weekStart.getDay() === 0 ? -6 : 1),
+    );
 
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekEnd.getDate() + 6);
+
     const weekOperations = this.operations.filter((operation) => {
       const operationDate = new Date(operation.date);
-
       return (operationDate >= weekStart)
         && (operationDate <= weekEnd)
         && (operation.userId === transaction.userId)

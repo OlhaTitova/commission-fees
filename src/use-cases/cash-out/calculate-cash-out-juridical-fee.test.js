@@ -13,56 +13,59 @@ describe('CalculateCashOutJuridicalFee', () => {
       rule: cashOutConfig,
     }).calculateFee();
 
-    expect(fee).toBe(0.00);
+    expect(fee).toBe(0);
   });
 
   it('should return zero fee if there is no rules', () => {
     const transaction = {
       date: '2016-01-05',
-      user_id: 1,
-      user_type: 'juridical',
+      userId: 1,
+      userType: 'juridical',
       type: 'cash_out',
       operation: {
         amount: 100,
         currency: 'EUR',
       },
+      processed: false,
     };
     const fee = new CalculateCashOutJuridicalFee({ transaction, rule: {} }).calculateFee();
 
-    expect(fee).toBe(0.00);
+    expect(fee).toBe(0);
   });
 
   it('should calculate min fee if the cash-out fee < min fee', () => {
     const cashOutConfig = { percents: 0.3, min: { amount: 0.5, currency: 'EUR' } };
     const transaction = {
       date: '2016-01-05',
-      user_id: 1,
-      user_type: 'juridical',
+      userId: 1,
+      userType: 'juridical',
       type: 'cash_out',
       operation: {
         amount: 1000,
         currency: 'EUR',
       },
+      processed: false,
     };
     const fee = new CalculateCashOutJuridicalFee({
       transaction,
       rule: cashOutConfig,
     }).calculateFee();
 
-    expect(fee).toBe(3.00);
+    expect(fee).toBe(3);
   });
 
   it('should calculate the cash-out fee', () => {
     const cashOutConfig = { percents: 0.3, min: { amount: 0.5, currency: 'EUR' } };
     const transaction = {
       date: '2016-01-05',
-      user_id: 1,
-      user_type: 'juridical',
+      userId: 1,
+      userType: 'juridical',
       type: 'cash_out',
       operation: {
         amount: 10,
         currency: 'EUR',
       },
+      processed: false,
     };
     const fee = new CalculateCashOutJuridicalFee({
       transaction,
@@ -70,6 +73,6 @@ describe('CalculateCashOutJuridicalFee', () => {
       cashOutConfig,
     }).calculateFee();
 
-    expect(fee).toBe(0.50);
+    expect(fee).toBe(0.5);
   });
 });
