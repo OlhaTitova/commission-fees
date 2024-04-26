@@ -30,9 +30,17 @@ class CalculateCashOutNaturalFee {
     const { amount: weekLimitAmount } = this.rule.weekLimit;
 
     if (weekAmount > weekLimitAmount) {
-      const amountExceeded = weekAmount - weekLimitAmount;
+      const transactionAmount = this.transaction.operation.amount;
+
+      if (transactionAmount > weekLimitAmount) {
+        return CalculateCashOutNaturalFee.computeRoundedFee({
+          amount: transactionAmount - weekLimitAmount,
+          feePercent,
+        });
+      }
+
       return CalculateCashOutNaturalFee.computeRoundedFee({
-        amount: amountExceeded,
+        amount: this.transaction.operation.amount,
         feePercent,
       });
     }

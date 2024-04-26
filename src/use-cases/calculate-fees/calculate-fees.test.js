@@ -60,6 +60,6 @@ describe('CalculateFees', () => {
       cashOutNaturalConfig: CASH_OUT_NATURAL_CONFIG,
     }).getFees();
 
-    expect(fees).toStrictEqual([0.06, 0.9, 87, 90, 90.3, 90.6, 5, 0, 0]);
+    expect(fees).toStrictEqual([0.06, 0.9, 87, 3, 0.3, 0.3, 5, 0, 0]);
   });
 });

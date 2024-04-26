@@ -92,7 +92,7 @@ describe('CalculateCashOutNaturalFee', () => {
       rule: DEFAULT_RULE,
     }).calculateFee();
 
-    expect(fee).toBe(90.6);
+    expect(fee).toBe(0.3);
   });
 
   it(`should calculate zero fee in case if total cash out amount per week
