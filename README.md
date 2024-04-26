@@ -85,9 +85,9 @@ Result - calculated commission fees for each operation. In each line only final 
 0.06
 0.90
 87.00
-90.00
-90.30
-90.60
+3.00
+0.30
+0.30
 5.00
 0.00
 0.00
